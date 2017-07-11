@@ -18,10 +18,12 @@ export class HeroDetailComponent {
   createForm() {
     this.heroForm = this.formBuilder.group({
       name: ['', Validators.required],
-      street: '',
-      city: '',
-      state: '',
-      zip: '',
+      address: this.formBuilder.group({
+        street: '',
+        city: '',
+        state: '',
+        zip: ''
+      }),
       power: '',
       sidekick: ''
     });
