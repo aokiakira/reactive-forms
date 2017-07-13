@@ -15,6 +15,7 @@ export class HeroDetailComponent {
     this.createForm();
 
     this.loadData();
+    this.modifyData();
   }
 
   createForm() {
@@ -33,6 +34,15 @@ export class HeroDetailComponent {
       address: new Address(),
       power: 'x-ray vision',
       sidekick: true,
+    })
+  }
+
+  modifyData() {
+    this.heroForm.patchValue({
+      name: 'SUPER MAN',
+      address: {
+        street: 'Redmond'
+      }
     })
   }
 }
