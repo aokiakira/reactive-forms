@@ -13,6 +13,8 @@ export class HeroDetailComponent {
 
   constructor(private formBuilder: FormBuilder) {
     this.createForm();
+
+    this.loadData();
   }
 
   createForm() {
@@ -22,5 +24,15 @@ export class HeroDetailComponent {
       power: '',
       sidekick: ''
     });
+  }
+
+  loadData() {
+    // The structure of data object MUST EXACTLY SAME as the structure of the FormGroup, when using setValue(...)
+    this.heroForm.setValue({
+      name: 'Super man',
+      address: new Address(),
+      power: 'x-ray vision',
+      sidekick: true,
+    })
   }
 }
