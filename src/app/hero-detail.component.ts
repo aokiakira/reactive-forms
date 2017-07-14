@@ -48,9 +48,7 @@ export class HeroDetailComponent implements OnChanges {
   }
 
   ngOnChanges() {
-    this.heroForm.reset();
-
-    this.heroForm.setValue({
+    this.heroForm.reset({
       name: this.hero.name,
       address: this.hero.addresses[0] || new Address(),
       power: this.hero.power || '',
