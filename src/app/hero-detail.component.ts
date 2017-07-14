@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, Input, OnChanges} from '@angular/core';
 import {FormGroup, FormBuilder, Validators} from '@angular/forms';
 
 import {states, Address} from './data-model';
@@ -7,7 +7,8 @@ import {states, Address} from './data-model';
   selector: 'hero-detail',
   templateUrl: './hero-detail.component.html'
 })
-export class HeroDetailComponent {
+export class HeroDetailComponent implements OnChanges {
+  @Input() hero;
   heroForm: FormGroup;
   states = states;
 
@@ -43,6 +44,15 @@ export class HeroDetailComponent {
       address: {
         street: 'Redmond'
       }
+    })
+  }
+
+  ngOnChanges() {
+    this.heroForm.setValue({
+      name: this.hero.name,
+      address: this.hero.addresses[0] || new Address(),
+      power: this.hero.power || '',
+      sidekick: this.hero.sidekick || false
     })
   }
 }

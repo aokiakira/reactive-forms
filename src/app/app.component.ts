@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+import {heroes} from './data-model';
 
 @Component({
   selector: 'app-root',
@@ -6,4 +7,10 @@ import {Component} from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  heroes = heroes;
+  selectedHero;
+
+  select(hero) {
+    this.selectedHero = hero;
+  }
 }
