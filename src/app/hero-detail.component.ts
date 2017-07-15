@@ -1,5 +1,5 @@
 import {Component, Input, OnChanges} from '@angular/core';
-import {FormGroup, FormBuilder, Validators} from '@angular/forms';
+import {FormArray, FormGroup, FormBuilder, Validators} from '@angular/forms';
 
 import {states, Address} from './data-model';
 
@@ -14,45 +14,38 @@ export class HeroDetailComponent implements OnChanges {
 
   constructor(private formBuilder: FormBuilder) {
     this.createForm();
-
-    this.loadData();
-    this.modifyData();
   }
 
   createForm() {
     this.heroForm = this.formBuilder.group({
       name: ['', Validators.required],
-      address: this.formBuilder.group(new Address()),
+      secretLairs: this.formBuilder.array([]),
       power: '',
       sidekick: ''
     });
   }
 
-  loadData() {
-    // The structure of data object MUST EXACTLY SAME as the structure of the FormGroup, when using setValue(...)
-    this.heroForm.setValue({
-      name: 'Super man',
-      address: new Address(),
-      power: 'x-ray vision',
-      sidekick: true,
-    })
-  }
-
-  modifyData() {
-    this.heroForm.patchValue({
-      name: 'SUPER MAN',
-      address: {
-        street: 'Redmond'
-      }
-    })
-  }
-
   ngOnChanges() {
     this.heroForm.reset({
       name: this.hero.name,
-      address: this.hero.addresses[0] || new Address(),
       power: this.hero.power || '',
       sidekick: this.hero.sidekick || false
-    })
+    });
+
+    this.setAddress(this.hero.addresses);
+  }
+
+  get secretLairs1(): FormArray {
+    return this.heroForm.get('secretLairs') as FormArray;
+  }
+
+  addLair() {
+    this.secretLairs1.push(this.formBuilder.group(new Address()));
+  }
+
+  private setAddress(addresses: Address[]) {
+    const addressFormGroups = addresses.map(address => this.formBuilder.group(address));
+    const addressFormArray = this.formBuilder.array(addressFormGroups);
+    this.heroForm.setControl('secretLairs', addressFormArray);
   }
 }
